@@ -76,7 +76,7 @@ export default function Setting({ navigation, route }) {
         </TouchableOpacity>
       </View>
       {/* General */}
-      <TouchableOpacity onPress={() => console.log('Navigate to General')}>
+      <TouchableOpacity onPress={() => navigation.navigate('GeneralScreen')}>
         <View style={styles.settingNode}>
           <View style={styles.innerNode}>
             <Text style={styles.nodeText}>General</Text>
@@ -87,7 +87,7 @@ export default function Setting({ navigation, route }) {
         </View>
       </TouchableOpacity>
       {/* Notifications & Sounds */}
-      <TouchableOpacity onPress={() => console.log('Navigate to Notifications & Sounds')}>
+      <TouchableOpacity onPress={() => navigation.navigate('NotificationsScreen')}>
         <View style={styles.settingNode}>
           <View style={styles.innerNode}>
             <Text style={styles.nodeText}>Notifications & Sounds</Text>
@@ -98,7 +98,7 @@ export default function Setting({ navigation, route }) {
         </View>
       </TouchableOpacity>
       {/* Data & Storage Usage */}
-      <TouchableOpacity onPress={() => console.log('Navigate to Data & Storage Usage')}>
+      <TouchableOpacity onPress={() => navigation.navigate('DataStorageScreen')}>
         <View style={styles.settingNode}>
           <View style={styles.innerNode}>
             <Text style={styles.nodeText}>Data & Storage Usage</Text>
@@ -109,7 +109,7 @@ export default function Setting({ navigation, route }) {
         </View>
       </TouchableOpacity>
       {/* Privacy & Security */}
-      <TouchableOpacity onPress={() => console.log('Navigate to Privacy & Security')}>
+      <TouchableOpacity onPress={() => navigation.navigate('PrivacyScreen')}>
         <View style={styles.settingNode}>
           <View style={styles.innerNode}>
             <Text style={styles.nodeText}>Privacy & Security</Text>
@@ -120,7 +120,7 @@ export default function Setting({ navigation, route }) {
         </View>
       </TouchableOpacity>
       {/* Help */}
-      <TouchableOpacity onPress={() => console.log('Navigate to Help')}>
+      <TouchableOpacity onPress={() => navigation.navigate('HelpScreen')}>
         <View style={styles.settingNode}>
           <View style={styles.innerNode}>
             <Text style={styles.nodeText}>Help</Text>
@@ -143,6 +143,12 @@ export default function Setting({ navigation, route }) {
           <View style={styles.iconContainer}>
             <Icon name="comment-o" size={20} color="#DDDDDD" />
             <Text style={styles.iconText}>Chats</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Notifications')} style={styles.notificationButton}>
+          <View style={styles.iconContainer}>
+            <Icon name="bell" size={20} color="#DDDDDD" />
+            <Text style={styles.iconText}>Notifications</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.settingsButton}>
