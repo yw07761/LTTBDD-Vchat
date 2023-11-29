@@ -10,15 +10,6 @@ export default function Chats({ navigation, route }) {
   useEffect(() => {
     const userId = route.params.userId;
 
-    // Fetch user data from API
-    fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/user/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('User Data:', data);
-        setUserData(data[0] || null);
-      })
-      .catch((error) => console.error('Error fetching user data:', error));
-
     // Fetch chat data from API
     fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/user/${userId}/chat`)
       .then((response) => response.json())
@@ -27,6 +18,20 @@ export default function Chats({ navigation, route }) {
         setChats(data[0]?.chats || []);
       })
       .catch((error) => console.error('Error fetching chat data:', error));
+      
+    // Fetch user data from API
+    fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/user/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('User Data:', data);
+        setUserData({
+          avatar: data.avatar,
+          username: data.username,
+        });
+      })
+      .catch((error) => console.error('Error fetching user data:', error));
+
+    
   }, [route.params.userId]);
 
   const logInAndNavigateToSettings = (userId) => {
@@ -41,9 +46,9 @@ export default function Chats({ navigation, route }) {
         style={styles.chatItem}
         onPress={() => navigation.navigate('ChatDetails', { chatId: item.chatId })}
       >
-        <Image source={{ uri: item.participantId.avatar }} style={styles.avatar} />
+        <Image source={{ uri: userData?.avatar }} style={styles.avatar} />
         <View style={styles.chatInfo}>
-          <Text style={styles.chatUsername}>{item.participantId.username}</Text>
+          <Text style={styles.chatUsername}>{userData?.username}</Text>
           <Text
             style={[
               styles.lastMessage,
@@ -76,6 +81,12 @@ export default function Chats({ navigation, route }) {
             <Text style={styles.iconText}>Chats</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Notifications')} style={styles.notificationButton}>
+          <View style={styles.iconContainer}>
+            <Icon name="bell" size={20} color="#DDDDDD" />
+            <Text style={styles.iconText}>Notifications</Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => logInAndNavigateToSettings(route.params.userId)}
           style={styles.settingsButton}
@@ -94,8 +105,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'left',
+    justifyContent: 'left',
     paddingTop: 16,
     paddingBottom: 16,
   },
@@ -120,10 +131,10 @@ const styles = StyleSheet.create({
   },
   chatItem: {
     flexDirection: 'row',
-    alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    width: '100%', 
   },
   avatar: {
     width: 40,
