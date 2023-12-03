@@ -3,27 +3,29 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } 
 import { StatusBar } from 'expo-status-bar';
 
 export default function ChatDetails({ route }) {
-  const { chatId } = route.params;
+  const { chatId } = route.params.chatId;
   const [chatDetails, setChatDetails] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    const userId = route.params.userId;
     // Fetch chat details from API based on chatId
-    fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/chat/${chatId}`)
+    fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/user/${userId}/chat`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Chat Details:', data);
         setChatDetails(data || null);
-        setMessages(data.messages || []);
+        setMessages(data[0]?.messages || []);
       })
       .catch((error) => console.error('Error fetching chat details:', error));
   }, [chatId]);
 
   const sendMessage = async () => {
+    const userId = route.params.userId;
     try {
       // Assuming you have an API endpoint to send a new message
-      const response = await fetch(`https://your-api-endpoint-for-sending-message`, {
+      const response = await fetch(`https://656498a3ceac41c0761e7f0f.mockapi.io/api/user/${userId}/chat/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ export default function ChatDetails({ route }) {
       {/* Chat Details */}
       <FlatList
         data={messages}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.Id}
         renderItem={({ item }) => (
           <View style={styles.messageContainer}>
             <Image source={{ uri: item.senderId.avatar }} style={styles.avatar} />
