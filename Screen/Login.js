@@ -40,12 +40,12 @@ export default function Login() {
     );
 
     if (foundUser) {
-      navigation.navigate('Introduce', { userId: foundUser.id });
+      navigation.navigate('Chats', { userId: foundUser.id });
     } else {
       setShowAlert(true);
     }
   };
-
+  
   const closeAlert = () => {
     setShowAlert(false);
   };
@@ -85,7 +85,6 @@ export default function Login() {
         style={styles.button}
         onPress={() => logIn()}
         >
-
         <Text style={styles.buttonText}>Đăng nhập</Text>
         </TouchableOpacity>
       </View>
